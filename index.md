@@ -1,4 +1,4 @@
 ---
-title: Welcome to my blog
+title: Adventures in PC Emulation
 ---
 
