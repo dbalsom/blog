@@ -3,7 +3,7 @@ title: "Chasing a bad CPU"
 date: 2022-12-25
 ---
 
-I've been working on a project involving controlling an Intel 8088 CPU via an Arduino Mega, which I eventually was going to make a blog post about on its own. For now, see https://github.com/dbalsom/arduino_8088 for a background.
+I've been working on a project involving controlling an Intel 8088 CPU via an Arduino Mega, which I eventually was going to make a blog post about on its own. For now, see [https://github.com/dbalsom/arduino_8088](https://github.com/dbalsom/arduino_8088) for a background.
 
 However during development of this project I encountered an interesting situation I thought was worth writing some notes about.
 
@@ -124,7 +124,8 @@ It seems like the only thing that isn't quite working is that neither the index 
 I was scratching my head for quite some time, wondering where the bug in my code was, but nothing was adding up.  Eventually, I took the CPU out of my working IBM PC 5150 and got the following memory read:
 
 ```
-[0x02, 0x00] add al, [bx+si]
+Program: [0x02, 0x00] add al, [bx+si]
+...
 A:[26000]    M:... I:... MEMR t1 \         |  2 [9090    ]
   [26000] DS M:R.. I:... MEMR t2  | <-r 90 |  2 [9090    ]
   [26000] DS M:R.. I:... PASV t3  | <-r 90 |  2 [9090    ]
@@ -134,7 +135,8 @@ A:[26000]    M:... I:... MEMR t1 \         |  2 [9090    ]
 A known good CPU produces the correct result, very interesting. Can we add an 8-bit displacement of +5 as well?
 
 ```
- [0x02, 0x40, 0x40] add al, [bx+si+05]
+ Program: [0x02, 0x40, 0x05] add al, [bx+si+05]
+ ...
  A:[26005]    M:... I:... MEMR t1 \         |  2 [9090    ]
    [26005] DS M:R.. I:... MEMR t2  | <-r 90 |  2 [9090    ]
    [26005] DS M:R.. I:... PASV t3  | <-r 90 |  2 [9090    ]
